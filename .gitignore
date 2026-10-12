@@ -1,0 +1,9 @@
+bin/
+obj/
+artifacts/
+.dotnative/
+dotnative.local.props
+local.properties
+.gradle/
+build/
+.DS_Store

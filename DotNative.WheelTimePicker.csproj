@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="dotnative.local.props" Condition="Exists('dotnative.local.props')" />
+  <PropertyGroup>
+    <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::VersionLessThan('$(NETCoreSdkVersion)', '10.0.100'))">net9.0</TargetFrameworks>
+    <LangVersion Condition="'$(TargetFramework)' == 'net10.0'">14</LangVersion>
+    <DotNativeSourceRoot Condition="'$(DotNativeSourceRoot)' == ''">$(MSBuildThisFileDirectory)../dotNative</DotNativeSourceRoot>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RootNamespace>DotNative.WheelTimePicker</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAotCompatible>true</IsAotCompatible>
+    <DotNativePluginKind>Native</DotNativePluginKind>
+    <DotNativePluginEntry>DotNativeWheelTimePickerPlugin</DotNativePluginEntry>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(DotNativeSourceRoot)/src/DotNative/DotNative.csproj" Condition="Exists('$(DotNativeSourceRoot)/src/DotNative/DotNative.csproj')" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md;LICENSE" Pack="true" PackagePath="/" />
+    <None Update="Platform/**/*;buildTransitive/**/*" Pack="true" PackagePath="%(Identity)" />
+  </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+      <_Parameter1>DotNative.WheelTimePicker.Tests</_Parameter1>
+    </AssemblyAttribute>
+    <Compile Remove="tests/**/*.cs" />
+    <None Remove="tests/**/*" />
+    <PackageReference Include="DotNative" Version="0.1.0-preview.10" Condition="!Exists('$(DotNativeSourceRoot)/src/DotNative/DotNative.csproj')" />
+  </ItemGroup>
+</Project>
