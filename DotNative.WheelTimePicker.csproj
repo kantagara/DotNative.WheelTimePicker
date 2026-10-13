@@ -2,6 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <Import Project="dotnative.local.props" Condition="Exists('dotnative.local.props')" />
   <PropertyGroup>
+    <Version>0.1.0-preview.1</Version>
     <TargetFrameworks>net9.0;net10.0</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::VersionLessThan('$(NETCoreSdkVersion)', '10.0.100'))">net9.0</TargetFrameworks>
     <LangVersion Condition="'$(TargetFramework)' == 'net10.0'">14</LangVersion>
@@ -30,4 +31,6 @@
     <None Remove="tests/**/*" />
     <PackageReference Include="DotNative" Version="0.1.0-preview.10" Condition="!Exists('$(DotNativeSourceRoot)/src/DotNative/DotNative.csproj')" />
   </ItemGroup>
+  <Import Project="build/PluginAuthoring.props" />
+  <Import Project="build/PluginAuthoring.targets" />
 </Project>
